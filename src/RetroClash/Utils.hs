@@ -12,7 +12,7 @@ module RetroClash.Utils
     , bitwise
     , parity
     , half
-    , halfIndex
+    -- , halfIndex
 
     , bvShiftL
     , bvShiftR
@@ -56,7 +56,7 @@ module RetroClash.Utils
     , noWrite
     , withWrite
     , singlePort
-    , unbraid
+    -- , unbraid
 
     , shifterL
     , shifterR
@@ -219,6 +219,7 @@ noWrite addr = addr `withWrite` pure Nothing
 singlePort :: (Applicative f) => (f addr -> f (Maybe (addr, wr)) -> r) -> (f addr -> f (Maybe wr) -> r)
 singlePort mem addr wr = mem addr (packWrite <$> addr <*> wr)
 
+{-
 unbraid
     :: (KnownNat n, KnownNat k, 1 <= n, 1 <= (n * 2 ^ k), (CLog 2 (2 ^ k)) ~ k, (CLog 2 (n * 2 ^ k)) ~ (CLog 2 n + k))
     => Maybe (Index (n * 2 ^ k))
@@ -227,6 +228,7 @@ unbraid Nothing = repeat Nothing
 unbraid (Just addr) = map (\k -> addr' <$ guard (sel == k)) indicesI
   where
     (addr', sel) = bitCoerce addr
+-}
 
 muxA :: (Foldable t, Alternative m, Applicative f) => t (f (m a)) -> f (m a)
 muxA = fmap getAlt . getAp . F.foldMap (Ap . fmap Alt)
@@ -264,11 +266,13 @@ parity = fold xor . bitCoerce @_ @(Vec (BitSize a) Bit)
 half :: (Bits a) => a -> a
 half x = x `shiftR` 1
 
+{-
 halfIndex
     :: (KnownNat n, 1 <= (2 * n), (CLog 2 (2 * n)) ~ (CLog 2 n + 1))
     => Index (2 * n)
     -> Index n
 halfIndex = fst . bitCoerce @_ @(_, Bit)
+-}
 
 bvShiftL :: (KnownNat n) => BitVector n -> Bit -> (Bit, BitVector n)
 bvShiftL xs x = bitCoerce (xs, x)
