@@ -17,16 +17,6 @@ module RetroClash.Utils
     , bvShiftL
     , bvShiftR
 
-    , (.==)
-    , (==.)
-    , (./=)
-    , (/=.)
-    , (.>)
-    , (.>=)
-    , (.<)
-    , (.<=)
-    , (<=.)
-
     , (.!!.)
     , (.!!)
     , (!!.)
@@ -152,41 +142,6 @@ instance IsActive Low where
     fromActive = fromActiveDyn Low . activeLevel
     toActive = MkActive . toActiveDyn Low
 
-infix 4 ==.
-(==.) :: (Eq a, Functor f) => a -> f a -> f Bool
-x ==. fy = (x ==) <$> fy
-
-infix 4 .==
-(.==) :: (Eq a, Functor f) => f a -> a -> f Bool
-fx .== y = (== y) <$> fx
-
-infix 4 /=.
-(/=.) :: (Eq a, Functor f) => a -> f a -> f Bool
-x /=. fy = (x /=) <$> fy
-
-infix 4 ./=
-(./=) :: (Eq a, Functor f) => f a -> a -> f Bool
-fx ./= y = (/= y) <$> fx
-
-infix 4 .>
-(.>) :: (Ord a, Functor f) => f a -> a -> f Bool
-fx .> y = (> y) <$> fx
-
-infix 4 .>=
-(.>=) :: (Ord a, Functor f) => f a -> a -> f Bool
-fx .>= y = (>= y) <$> fx
-
-infix 4 .<
-(.<) :: (Ord a, Functor f) => f a -> a -> f Bool
-fx .< y = (< y) <$> fx
-
-infix 4 .<=
-(.<=) :: (Ord a, Functor f) => f a -> a -> f Bool
-fx .<= y = (<= y) <$> fx
-
-infix 4 <=.
-(<=.) :: (Ord a, Functor f) => a -> f a -> f Bool
-x <=. fy = (x <=) <$> fy
 
 (.!!.) :: (KnownNat n, Enum i, Applicative f) => f (Vec n a) -> f i -> f a
 (.!!.) = liftA2 (!!)
