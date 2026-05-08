@@ -8,7 +8,7 @@ module RetroClash.SerialTx
     , txStep
     ) where
 
-import Clash.Prelude
+import Clash.Prelude hiding (ClockDivider)
 import RetroClash.Utils
 import RetroClash.Clock
 
@@ -18,6 +18,8 @@ import Control.Monad.Writer
 import Data.Foldable (traverse_)
 import Data.Monoid (Any(..))
 import Data.Word
+
+type ClockDivider dom ps = ps `Div` DomainPeriod dom
 
 data TxState n
     = TxIdle

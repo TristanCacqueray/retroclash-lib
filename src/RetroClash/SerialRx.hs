@@ -7,7 +7,7 @@ module RetroClash.SerialRx
     , rxStep
     ) where
 
-import Clash.Prelude
+import Clash.Prelude hiding (ClockDivider)
 import RetroClash.Utils
 import RetroClash.Clock
 
@@ -16,6 +16,8 @@ import Control.Monad.State
 import Control.Monad.Trans.Writer
 import Data.Monoid
 import Data.Word
+
+type ClockDivider dom ps = ps `Div` DomainPeriod dom
 
 data RxState n
     = RxIdle
